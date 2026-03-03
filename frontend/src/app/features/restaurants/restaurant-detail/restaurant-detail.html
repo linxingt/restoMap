@@ -1,0 +1,36 @@
+<p>restaurant-detail works!</p>
+<div class="details">
+    <div class="details-row">
+        <div class="label">Name :</div>
+        <div class="value">{{restaurant.name}}</div>
+    </div>
+    <div class="details-row">
+        <div class="label">Address :</div>
+        <div class="value">{{restaurant.address}}</div>
+    </div>
+    <div class="details-row">
+        <div class="label">Cuisine :</div>
+        <div class="value">{{restaurant.cuisines[0]|cuisine}}</div>
+    </div>
+    <div class="details-row">
+        <div class="label">Price Range :</div>
+        <div class="value">{{ restaurant.priceRange[0]|currency:'EUR' }} - {{ restaurant.priceRange[1]|currency:'EUR' }}
+        </div>
+    </div>
+    <div class="details-row">
+        <div class="label">Description :</div>
+        <div class="value">{{restaurant.description}}</div>
+    </div>
+    <div class="details-row">
+        <div class="label">Rating :</div>
+        <div class="value">{{restaurant.rating}}</div>
+    </div>
+    <div class="details-row">
+        <div class="label">reviews :</div>
+        <div class="value">{{restaurant.reviews}}</div>
+    </div>
+    <div class="details-row">
+        <div class="label">Last Updated :</div>
+        <div class="value">{{restaurant.updatedAt | date:'dd-MMM-yyyy'}}</div>
+    </div>
+</div>
