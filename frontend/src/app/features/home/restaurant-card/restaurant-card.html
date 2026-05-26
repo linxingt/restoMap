@@ -1,1 +1,20 @@
+@let resto=restaurant();
 <p>restaurant-card works!</p>
+<div class="card bg-orange-200" (click)="onCardClick()">
+    <h3>{{ resto.name }}</h3>
+    <h3>{{ resto.address | postalCode}}</h3>
+
+    <div class="tags">
+        @for (type of resto.cuisineTypes; track type) {
+        <span class="cuisine-tag">#{{ type }}</span>
+        }
+    </div>
+    <div>
+        <div class="label">Rating :</div>
+        <div class="value">{{resto.ratingAvg}}</div>
+    </div>
+    <div>
+        <div class="label">Last Updated :</div>
+        <div class="value">{{resto.updatedAt | date:'dd/MM/yyyy HH:mm'}}</div>
+    </div>
+</div>

@@ -1,59 +1,29 @@
-# RestoMap
+# RestoMap : Votre guide gastronomique authentique
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+RestoMap est une application web interactive conçue pour explorer, noter et partager les meilleures pépites culinaires. Spécialisée dans la richesse de la gastronomie chinoise (Sichuan, Guangdong, Hunan, etc.), l'application s'ouvre également aux saveurs du monde, de l'Italie à l'Inde.
 
-## Development server
+L'objectif est simple : centraliser des avis authentiques sur une carte interactive pour mon entourage et moi-même. En nous basant sur nos propres expériences, nous évitons les recommandations peu fiables ou les publicités mensongères pour ne garder que le meilleur dans l'assiette.
 
-To start a local development server, run:
+## Stack Technique
 
-```bash
-ng serve
-```
+Le projet repose sur une architecture moderne et robuste :
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+* **Frontend** : Angular avec Tailwind CSS pour une interface fluide et Leaflet pour la cartographie interactive.
+* **Backend** : Java Spring Boot, gérant la logique métier et la sécurité des données.
+* **Base de données** : PostgreSQL pour un stockage fiable des restaurants, des notes et des commentaires.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Fonctionnalités Clés
 
-```bash
-ng generate component component-name
-```
+* **Exploration Interactive** : Visualisation des restaurants sur une carte grâce à l'intégration Leaflet.
+* **Filtres par Région** : Possibilité de filtrer les établissements selon le type de cuisine spécifique.
+* **Notes et Avis** : Système de notation (rating) et de commentaires pour conserver une trace de chaque expérience culinaire.
+* **Dashboard Admin** : Interface dédiée à la gestion et à la validation des nouveaux restaurants ajoutés par les utilisateurs.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Déploiement
 
-## Building
+> Projet bientôt déployé.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

@@ -1,36 +1,40 @@
-<p>restaurant-detail works!</p>
-<div class="details">
-    <div class="details-row">
-        <div class="label">Name :</div>
-        <div class="value">{{restaurant.name}}</div>
+@let resto=restaurant();
+<p>resto-detail works!</p>
+<div class="flex flex-col gap-4 p-6 bg-pink-50 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2">Détails du Restaurant</h2>
+
+    <div class="flex justify-between items-center">
+        <div class="font-bold text-gray-700">Nom :</div>
+        <div class="text-pink-600 font-semibold">{{resto.name}}</div>
     </div>
-    <div class="details-row">
-        <div class="label">Address :</div>
-        <div class="value">{{restaurant.address}}</div>
+
+    @if (resto.cuisineTypes && resto.cuisineTypes.length > 0) {
+    <div class="flex flex-wrap gap-2">
+        <div class="font-bold text-gray-700 w-full">Type de cuisine :</div>
+        @for (type of resto.cuisineTypes; track type) {
+            <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm">#{{type}}</span>
+        }
     </div>
-    <div class="details-row">
-        <div class="label">Cuisine :</div>
-        <div class="value">{{restaurant.cuisines[0]|cuisine}}</div>
+    }
+
+    <div class="flex justify-between">
+        <div class="font-bold text-gray-700">Adresse :</div>
+        <div class="text-gray-600 text-right">{{resto.address}}</div>
     </div>
-    <div class="details-row">
-        <div class="label">Price Range :</div>
-        <div class="value">{{ restaurant.priceRange[0]|currency:'EUR' }} - {{ restaurant.priceRange[1]|currency:'EUR' }}
+
+    <div class="flex justify-between">
+        <div class="font-bold text-gray-700">Gamme de prix :</div>
+        <div class="text-green-600 font-medium">
+            {{ resto.pricePerPersonAvg | currency:'EUR' }}
         </div>
     </div>
-    <div class="details-row">
-        <div class="label">Description :</div>
-        <div class="value">{{restaurant.description}}</div>
+
+    <div class="flex justify-between items-center">
+        <div class="font-bold text-gray-700">Note :</div>
+        <div class="text-yellow-500 font-bold text-xl">{{resto.ratingAvg}} / 5 ⭐</div>
     </div>
-    <div class="details-row">
-        <div class="label">Rating :</div>
-        <div class="value">{{restaurant.rating}}</div>
-    </div>
-    <div class="details-row">
-        <div class="label">reviews :</div>
-        <div class="value">{{restaurant.reviews}}</div>
-    </div>
-    <div class="details-row">
-        <div class="label">Last Updated :</div>
-        <div class="value">{{restaurant.updatedAt | date:'dd-MMM-yyyy'}}</div>
+
+    <div class="text-xs text-gray-400 text-right mt-4 italic">
+        Mis à jour le {{resto.updatedAt | date}}
     </div>
 </div>

@@ -1,12 +1,14 @@
-<style>
- 
-</style>
-
+<app-navbar></app-navbar>
 <main class="main">
- <h1>RestoMap</h1>
- 
+    <h1>RestoMap</h1>
+
+    @if (!selectedRestaurant()) {
+    <app-map></app-map>
+    } @else {
+    <button (click)="backToList()">← Retour</button>
+    <app-restaurant-detail [restaurant]="selectedRestaurant()!" />
+    }
+    
 </main>
 
-
-
-<router-outlet />
+<!-- <router-outlet></router-outlet> -->

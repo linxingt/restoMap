@@ -1,41 +1,26 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Cuisine } from '../models/cuisine.model';
 
-export const CuisineDescriptions: Record<Cuisine, string> = {
-  SIC: "Épicé (Mala)",
-  GUA: "Saveurs authentiques des ingrédients frais",
-  HUN: "Acide et épicé",
-  SHA: "Salé et croustillant",
-  JIA: "Léger, frais et raffiné",
-  FUJ: "Soupes et ragoûts riches et savoureux",
-  ANH: "Utilisation de produits locaux (herbes/gibier)",
-  ZHE: "Fusion et poissons d'eau douce",
-  STR: "Snacks et cuisine de rue",
-  BOI: "Pâtisseries, desserts et boissons",
-  DES: "Pâtisseries, desserts et boissons"
-};
-
-const CUISINES: Record<Cuisine, string> = {
-  SIC: "Sichuan",
-  GUA: "Guangdong",
-  HUN: "Hunan",
-  SHA: "Shandong",
-  JIA: "Fujian",
-  FUJ: "Jiangsu",
-  ANH: "Anhui",
-  ZHE: "Zhejiang",
-  STR: "Street Food",
-  BOI: "Boisson",
-  DES: "Dessert"
+export const CUISINE_DETAILS: Record<string, string> = {
+  "Sichuanaise": "Épicé et anesthésiant (Poivre du Sichuan)",
+  "Cantonaise": "Saveurs authentiques et ingrédients frais",
+  "Hunanaise": "Acide et très épicé (Piment frais)",
+  "Shandong": "Plats salés et croustillants, souvent aux fruits de mer",
+  "Jiangsu": "Cuisine légère, fraîche et très raffinée",
+  "Fujian": "Célèbre pour ses soupes et ragoûts riches en umami",
+  "Anhui": "Cuisine de montagne utilisant des herbes sauvages",
+  "Zhejiang": "Plats délicats à base de poissons d'eau douce",
+  "International": "Saveurs du monde (Italie, Inde, etc.)",
+  "Street Food": "Snacks rapides, grillades et cuisine de rue",
+  "Boisson": "Bubble tea, jus de fruits frais et thés artisanaux",
+  "Dessert": "Pâtisseries, douceurs sucrées et spécialités fines",
 };
 
 @Pipe({
-  name: 'cuisine',
+  name: 'cuisineDesc',
 })
-export class CuisinePipe implements PipeTransform {
-
-  transform(value: Cuisine): string {
-    return CUISINES[value] || value;
+export class CuisineDescPipe implements PipeTransform {
+  transform(value: string): string {
+    return CUISINE_DETAILS[value] || value;
   }
 
 }
