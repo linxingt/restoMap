@@ -1,0 +1,133 @@
+<div class="p-5 flex flex-col gap-6">
+
+    <!-- TITLE -->
+    <div>
+        <h2 class="text-2xl font-bold">
+            Filters
+        </h2>
+    </div>
+
+    <!-- NAME + RESET -->
+    <div>
+        <div class="flex items-center justify-between mb-2">
+            <label class="font-semibold block"> Restaurant name </label>
+            <button (click)="resetFilters()" class="text-gray-500 hover:text-black transition-colors"
+                title="Reset all filters">
+                <svg lucideRotateCcw class="w-4 h-4"></svg>
+            </button>
+        </div>
+        <input type="text" class="w-full border rounded-xl p-3" [(ngModel)]="filter().name"
+            (input)="updateSearch($event)" />
+    </div>
+
+    <!-- CUISINES -->
+    <div>
+        <label class="font-semibold block mb-3">
+            Cuisine types
+        </label>
+        <div class="border rounded-xl flex flex-col overflow-hidden">
+            <input type="text" placeholder="Search cuisines..." class="w-full p-3 border-b outline-none bg-gray-50"
+                [ngModel]="cuisineSearch()" (ngModelChange)="cuisineSearch.set($event)" />
+
+            <div class="flex flex-wrap gap-2 p-3 max-h-40 overflow-y-auto bg-white">
+                @for (cuisine of filteredCuisineOptions(); track cuisine) {
+                <button (click)="toggleCuisine(cuisine)" class="px-3 py-2 rounded-full border transition text-sm"
+                    [class.bg-black]="filter().cuisineTypes.includes(cuisine)"
+                    [class.text-white]="filter().cuisineTypes.includes(cuisine)">
+                    {{ cuisine }}
+                </button>
+                }
+                @if (filteredCuisineOptions().length === 0) {
+                <span class="text-gray-400 text-sm">No cuisine found.</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ADVANCED TOGGLE -->
+    <button class="flex items-center gap-2" (click)="showMoreFilters.set(!showMoreFilters())">
+        @if (!showMoreFilters()) {
+        <svg lucideEye />
+        } @else {
+        <svg lucideEyeOff />
+        }
+        Plus filters
+    </button>
+
+    <!-- ADVANCED -->
+    @if (showMoreFilters()) {
+
+    <!-- PRICE -->
+    <div>
+        <label class="font-semibold block mb-3">Price range</label>
+        <div class="relative w-full h-2 bg-gray-200 rounded-lg mb-4 group">
+            <div class="absolute h-2 bg-yellow-600 rounded-lg z-0" [style.left.%]="getMinPercent()"
+                [style.right.%]="100 - getMaxPercent()">
+            </div>
+            <div class="absolute -top-10 transform -translate-x-1/2 flex flex-col items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none"
+                [style.left.%]="getMinPercent()">
+                <div class="bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
+                    {{ filter().minPrice }}€
+                </div>
+                <div
+                    class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-yellow-600">
+                </div>
+            </div>
+
+            <div class="absolute -top-10 transform -translate-x-1/2 flex flex-col items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none"
+                [style.left.%]="getMaxPercent()">
+                <div class="bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
+                    {{ filter().maxPrice }}€
+                </div>
+                <div
+                    class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-yellow-600">
+                </div>
+            </div>
+
+            <!-- [(ngModel)] force la modification de la valeur avant que ton signal Angular ne soit correctement notifié -->
+            <input type="range" [min]="minPrice()" [max]="maxPrice()" step="1" [value]="filter().minPrice"
+                (input)="onMinPriceInput($event)"
+                class="absolute w-full h-2 appearance-none bg-transparent pointer-events-none top-0 left-0 z-10 
+                      [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-yellow-600 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-md
+                      [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-yellow-600 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:shadow-md" />
+
+            <input type="range" [min]="minPrice()" [max]="maxPrice()" step="1" [value]="filter().maxPrice"
+                (input)="onMaxPriceInput($event)"
+                class="absolute w-full h-2 appearance-none bg-transparent pointer-events-none top-0 left-0 z-10 
+                      [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-yellow-600 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-md
+                      [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-yellow-600 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:shadow-md" />
+        </div>
+
+        <div class="flex justify-between items-center text-sm font-medium text-gray-500 mt-2">
+            <span>{{ minPrice() }}€</span>
+            <span>{{ maxPrice() }}€</span>
+        </div>
+    </div>
+
+    <!-- RATING -->
+    <div>
+        <label class="font-semibold block mb-3">
+            Ratings
+        </label>
+        <div class="flex gap-2 flex-wrap">
+            @for (rating of [1,2,3,4,5]; track rating) {
+            <button (click)="toggleRating(rating)" class="px-4 py-2 border rounded-full"
+                [class.bg-black]="filter().ratings.includes(rating)"
+                [class.text-white]="filter().ratings.includes(rating)">
+                {{ rating }}★
+            </button>
+            }
+        </div>
+    </div>
+
+    <!-- SORT -->
+    <div>
+        <label class="font-semibold block mb-2"> Sort by updated date </label>
+        <select class="border rounded-xl p-3 w-full" [(ngModel)]="filter().sortByUpdatedAt"
+            (change)="updateSort($event)">
+            <option value="DESC"> Most recent </option>
+            <option value="ASC"> Oldest </option>
+        </select>
+    </div>
+    }
+</div>

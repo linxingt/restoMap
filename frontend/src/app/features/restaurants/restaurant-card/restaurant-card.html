@@ -1,0 +1,59 @@
+@let resto=restaurant();
+
+<div class=" bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl
+    transition cursor-pointer mb-5" (click)="goToRestaurant()">
+
+    <!-- IMAGE -->
+    @if (resto.photos) {<img [src]="resto.photos[0]" class="w-full h-52 object-cover" />}
+
+    <!-- CONTENT -->
+    <div class="p-4">
+
+        <!-- TITLE -->
+        <div class="flex justify-between items-start">
+            <h2 class="text-xl font-bold">
+                {{ resto.name }}
+            </h2>
+            <div class=" bg-black text-white px-2 py-1 rounded-full text-sm">
+                {{ resto.ratingAvg || 0 }} ★
+            </div>
+
+        </div>
+
+        <!-- ADDRESS -->
+
+        <p class="text-gray-500 text-sm mt-2">
+            {{ resto.address | postalCode }}
+        </p>
+
+        <!-- TAGS -->
+
+        <div class="flex flex-wrap gap-2 mt-4">
+
+            @for (type of resto.cuisineTypes; track $index) {
+
+            <span class=" bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs">
+                {{ type }}
+            </span>
+
+            }
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class=" flex justify-between items-center mt-5">
+
+            <div class="font-semibold">
+                {{ resto.pricePerPersonAvg || '?' }}€
+            </div>
+
+            <div class="text-xs text-gray-400">
+                {{ resto.updatedAt | date:'dd/MM/yyyy' }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
