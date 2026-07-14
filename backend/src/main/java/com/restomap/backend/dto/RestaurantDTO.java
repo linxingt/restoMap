@@ -29,7 +29,6 @@ public class RestaurantDTO {
     private Boolean approved;
     private Date updatedAt;
 
-    // Un constructeur ou un mapper pour transformer l'Entity en DTO
     public RestaurantDTO(Restaurant resto) {
         this.id = resto.getId();
         this.name = resto.getName();

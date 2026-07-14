@@ -7,11 +7,9 @@ import { Router } from '@angular/router';
   selector: 'app-restaurant-card',
   imports: [DatePipe, PostalCodePipe],
   templateUrl: './restaurant-card.html',
-  styleUrl: './restaurant-card.scss',
 })
 export class RestaurantCard {
   restaurant = input.required<Restaurant>()
-  cardClick = output<Restaurant>();
 
   private router = inject(Router);
 

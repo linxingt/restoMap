@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     List<Restaurant> findByApprovedTrue();
-
     List<Restaurant> findByCuisineTypesContainingIgnoreCase(String type);
 }

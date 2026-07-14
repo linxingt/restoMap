@@ -38,7 +38,7 @@ export class RestaurantFilterService {
     return this.rawRestaurants()
       .filter(r => {
         const matchesName = !filter.name || r.name.toLowerCase().includes(filter.name.toLowerCase());
-        const matchesCuisine = filter.cuisineTypes.length === 0 || r.cuisineTypes.some(c => filter.cuisineTypes.includes(c)); //(OR)
+        const matchesCuisine = filter.cuisineTypes.length === 0 || r.cuisineTypes.some(c => filter.cuisineTypes.includes(c)); 
         const price = r.pricePerPersonAvg ?? 0;
         const matchesPrice = (filter.minPrice === 0 && filter.maxPrice === 999) || (price >= filter.minPrice && price <= filter.maxPrice);
         const rating = r.ratingAvg ?? 0;
@@ -49,9 +49,9 @@ export class RestaurantFilterService {
       .sort((a, b) => {
         const dateA = new Date(a.updatedAt ?? 0).getTime();
         const dateB = new Date(b.updatedAt ?? 0).getTime();
-        return filter.sortByUpdatedAt === 'ASC' // + ancien -> + récent
-          ? dateA - dateB
-          : dateB - dateA; // B>A -> B-A>0 -> + récent en haut
+        return filter.sortByUpdatedAt === 'ASC'
+          ? dateA - dateB // + ancien -> + récent
+          : dateB - dateA; // B>A -> B-A>0 -> + récent -> + ancien
       });
   });
 

@@ -18,7 +18,7 @@ export class RestaurantService {
       map(restaurants =>
         restaurants.map(resto => ({
           ...resto,
-          slug: createSlug(resto.name) // On génère le slug ici pour chaque resto !
+          slug: createSlug(resto.name)
         }))
       ));
   }

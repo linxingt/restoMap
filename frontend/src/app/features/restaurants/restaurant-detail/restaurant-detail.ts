@@ -6,7 +6,6 @@ import { Restaurant } from '../../../shared/models/restaurant';
   selector: 'app-restaurant-detail',
   imports: [DatePipe, CurrencyPipe],
   templateUrl: './restaurant-detail.html',
-  styleUrl: './restaurant-detail.scss',
 })
 export class RestaurantDetail {
   restaurant=input.required<Restaurant>()

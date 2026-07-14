@@ -1,9 +1,11 @@
 package com.restomap.backend.controller;
 
 import com.restomap.backend.dto.RestaurantDTO;
+import com.restomap.backend.dto.RestaurantDetailDTO;
 import com.restomap.backend.entity.Restaurant;
 import com.restomap.backend.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +18,18 @@ class RestaurantController {
 
     @GetMapping
     public List<RestaurantDTO> getRestaurants() {
-        return restaurantService.getApprovedRestaurants() // récupère les Entities
+        return restaurantService.getApprovedRestaurants()
                 .stream()
-                .map(RestaurantDTO::new) // Les transforme en DTO (ce qui crée le tableau [lat, lng])
+                .map(RestaurantDTO::new) // qui crée le tableau [lat, lng]
                 .toList();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RestaurantDetailDTO> getRestaurantDetail(
+            @PathVariable Integer id
+    ) {
+        RestaurantDetailDTO detailDTO = restaurantService.getRestaurantDetail(id);
+        return ResponseEntity.ok(detailDTO);
     }
 
     @PostMapping
@@ -34,4 +44,5 @@ class RestaurantController {
     public List<Restaurant> createManyRestaurant(@RequestBody List<Restaurant> restaurants) {
         return restaurantService.addManyRestaurant(restaurants);
     }
+
 }

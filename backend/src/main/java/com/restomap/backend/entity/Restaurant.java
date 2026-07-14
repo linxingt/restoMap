@@ -68,7 +68,7 @@ public class Restaurant {
         if (other.cuisineTypes != null) this.cuisineTypes.addAll(other.cuisineTypes);
     }
 
-    @PrePersist // Avant la première insertion en BDD
+    @PrePersist // Avant la première insertion en BD
     protected void onCreate() {
         this.updatedAt = new Date();
     }

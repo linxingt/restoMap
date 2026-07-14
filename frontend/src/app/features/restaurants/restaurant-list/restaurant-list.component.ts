@@ -11,7 +11,6 @@ import { RestaurantFilterService } from '../../../core/services/restaurant-filte
   selector: 'app-restaurant-list',
   imports: [RestaurantFilterComponent, Map, RestaurantCard],
   templateUrl: './restaurant-list.component.html',
-  styleUrl: './restaurant-list.component.scss',
 })
 
 export class RestaurantListComponent {
@@ -20,7 +19,6 @@ export class RestaurantListComponent {
   public filterService = inject(RestaurantFilterService);
 
  constructor() {
-    // On récupère les données de l'API et on les donne directement au Service
     this.restaurantService.getApprovedRestaurants().subscribe(restos => {
       this.filterService.setRestaurants(restos);
     });

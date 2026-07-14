@@ -1,13 +1,11 @@
 <div class="p-5 flex flex-col gap-6">
 
-    <!-- TITLE -->
     <div>
         <h2 class="text-2xl font-bold">
             Filters
         </h2>
     </div>
 
-    <!-- NAME + RESET -->
     <div>
         <div class="flex items-center justify-between mb-2">
             <label class="font-semibold block"> Restaurant name </label>
@@ -16,11 +14,10 @@
                 <svg lucideRotateCcw class="w-4 h-4"></svg>
             </button>
         </div>
-        <input type="text" class="w-full border rounded-xl p-3" [(ngModel)]="filter().name"
+        <input type="text" class="w-full border rounded-xl p-3" [value]="filter().name"
             (input)="updateSearch($event)" />
     </div>
 
-    <!-- CUISINES -->
     <div>
         <label class="font-semibold block mb-3">
             Cuisine types
@@ -44,7 +41,6 @@
         </div>
     </div>
 
-    <!-- ADVANCED TOGGLE -->
     <button class="flex items-center gap-2" (click)="showMoreFilters.set(!showMoreFilters())">
         @if (!showMoreFilters()) {
         <svg lucideEye />
@@ -54,10 +50,7 @@
         Plus filters
     </button>
 
-    <!-- ADVANCED -->
     @if (showMoreFilters()) {
-
-    <!-- PRICE -->
     <div>
         <label class="font-semibold block mb-3">Price range</label>
         <div class="relative w-full h-2 bg-gray-200 rounded-lg mb-4 group">
@@ -84,7 +77,6 @@
                 </div>
             </div>
 
-            <!-- [(ngModel)] force la modification de la valeur avant que ton signal Angular ne soit correctement notifié -->
             <input type="range" [min]="minPrice()" [max]="maxPrice()" step="1" [value]="filter().minPrice"
                 (input)="onMinPriceInput($event)"
                 class="absolute w-full h-2 appearance-none bg-transparent pointer-events-none top-0 left-0 z-10 
@@ -104,7 +96,6 @@
         </div>
     </div>
 
-    <!-- RATING -->
     <div>
         <label class="font-semibold block mb-3">
             Ratings
@@ -120,10 +111,9 @@
         </div>
     </div>
 
-    <!-- SORT -->
     <div>
         <label class="font-semibold block mb-2"> Sort by updated date </label>
-        <select class="border rounded-xl p-3 w-full" [(ngModel)]="filter().sortByUpdatedAt"
+        <select class="border rounded-xl p-3 w-full" [value]="filter().sortByUpdatedAt"
             (change)="updateSort($event)">
             <option value="DESC"> Most recent </option>
             <option value="ASC"> Oldest </option>

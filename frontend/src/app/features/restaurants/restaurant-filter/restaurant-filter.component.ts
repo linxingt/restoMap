@@ -7,7 +7,6 @@ import { RestaurantFilter, RestaurantFilterService } from '../../../core/service
   selector: 'app-restaurant-filter',
   imports: [LucideEye, LucideEyeOff, FormsModule, LucideRotateCcw],
   templateUrl: './restaurant-filter.component.html',
-  styleUrl: './restaurant-filter.component.scss',
 })
 
 export class RestaurantFilterComponent {
@@ -99,7 +98,7 @@ export class RestaurantFilterComponent {
     return ((this.filter().maxPrice - this.minPrice()) / range) * 100;
   }
 
-  // Sécurité : Empêche le Min de croiser ou dépasser le Max
+  // Empêche le Min de croiser ou dépasser le Max
   onMinPriceInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     let newMin = parseInt(inputElement.value, 10);

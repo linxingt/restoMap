@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export interface Restaurant {
-    _id?: string;
+    _id?: number;
     name: string;
     slug: string;
     latitudeEtlongitude: [number, number];

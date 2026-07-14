@@ -1,5 +1,5 @@
 export interface Comment {
-  id?: string;
+  id?: number;
   restaurant: string;
   user: string;
   rating: number; // 1 à 5

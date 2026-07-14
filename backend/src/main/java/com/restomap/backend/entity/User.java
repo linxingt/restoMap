@@ -8,7 +8,8 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 @Data
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +17,13 @@ public class User {
 
     private String username;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
-    // ADMIN ou USER
+    // 'USER' | 'ADMIN' | 'VISITOR'
     private String role;
 
     private Date createdAt;
