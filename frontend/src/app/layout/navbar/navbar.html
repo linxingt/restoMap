@@ -1,104 +1,65 @@
-<nav
-    class="bg-white/90 backdrop-blur-md border-b border-gray-200 dark:bg-gray-900/90 dark:border-gray-800 fixed top-0 left-0 w-full z-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
+<nav class="bg-white border-b-2 border-black fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+        <a routerLink="/" class="flex items-center gap-3">
+            <img src="https://i.ibb.co/hxvz2vGb/image.png" alt="Logo" class="h-8 w-auto">
+            <span class="text-xl font-bold text-black tracking-tight">Rest'oh <span
+                    class="text-yellow-700">S</span>hare</span>
+        </a>
 
-            <div class="cursor-pointer">
-                <a routerLink="/" class="flex flex-row items-center justify-center space-x-3">
-                    <img src="https://images2.imgbox.com/01/a7/2lTqa8dH_o.png" alt="Logo de Rest'oh Share"
-                        class="h-10 w-auto">
-                    <span class="text-xl font-semibold text-gray-900 dark:text-white tracking-tight">Rest'oh <span
-                            class="text-yellow-500">S</span>hare</span>
-                </a>
-            </div>
+        <div class="flex items-center gap-8">
+            <a routerLink="/contact" routerLinkActive="text-[#834008]" [routerLinkActiveOptions]="{exact: true}"
+                class="text-black font-bold hover:text-[#834008] transition-colors">
+                Contact
+            </a>
+            <a routerLink="/questions" routerLinkActive="text-[#834008]"
+                class="text-black font-bold hover:text-[#834008] transition-colors">
+                Questions ?
+            </a>
 
-            <div class="flex items-center space-x-6">
-                <a routerLink=" /contact" routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-                    [routerLinkActiveOptions]="{exact: true}"
-                    class="text-gray-600 font-bold hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
-                    Contact
-                </a>
-                <a hrouterLink="/questions" routerLinkActive="text-blue-600 dark:text-blue-400 font-semibold"
-                    class="text-gray-600 font-bold hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center ransition-colors duration-200">
-                    <span>Questions ?</span>
-                </a>
-                <div class="relative">
-                    <button (click)="toggleDropdown()"
-                        class="flex items-center space-x-1 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 text-gray-700 dark:text-gray-300 focus:outline-none">
-
-                        @if (!authService.isLoggedIn()) {
-                        <div
-                            class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-gray-300 dark:border-gray-600">
-                            <svg lucideUser class="w-5 h-5"></svg>
-                        </div>
-                        } @else {
-                        <div
-                            class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold text-sm uppercase shadow-sm">
-                            {{ getUsernameInitial() }}
-                        </div>
-                        }
-
-                        @if (isDropdownOpen()) {
-                        <svg lucideChevronUp class="w-5 h-5 text-gray-800 dark:text-gray-200"></svg>
-                        } @else {
-                        <svg lucideChevronDown class="w-5 h-5 text-gray-800 dark:text-gray-200"></svg>
-                        }
-                    </button>
-                    @if (isDropdownOpen()) {
+            <div class="relative">
+                <button (click)="toggleDropdown()" class="flex items-center gap-2 outline-none">
+                    @if (authService.isLoggedIn()) {
                     <div
-                        class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 font-medium shadow-xl py-2 z-100 transform origin-top-right transition-all duration-150">
-
-                        @if (authService.isLoggedIn()) {
-                        <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
-                            <p class="text-xs text-gray-400">Compte connecté</p>
-                        </div>
-
-                        <a routerLink="/favoris" (click)="isDropdownOpen.set(false)"
-                            class="flex items-center space-x-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            <svg lucideHeart class="w-5 h-5 text-red-500"></svg>
-                            <span>Mes favoris</span>
-                        </a>
-
-                        <a routerLink="/contributions" (click)="isDropdownOpen.set(false)"
-                            class="flex items-center space-x-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            <svg lucideFileText class="w-5 h-5 text-blue-500"></svg>
-                            <span>Mes contributions</span>
-                        </a>
-
-                        <hr class="border-gray-100 dark:border-gray-700 my-1">
-
-                        <button (click)="logout()"
-                            class="w-full flex items-center space-x-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left">
-                            <svg lucideLogOut class="w-5 h-5"></svg>
-                            <span>Se déconnecter</span>
-                        </button>
-                        }
-
-                        @else {
-                        <a routerLink="/favoris" (click)="isDropdownOpen.set(false)"
-                            class="flex items-center space-x-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            <svg lucideHeart class="w-5 h-5 text-gray-400"></svg>
-                            <span>Mes favoris</span>
-                        </a>
-
-                        <hr class="border-gray-100 dark:border-gray-700 my-1">
-
-                        <a (click)="openLoginModal()"
-                            class="flex items-center space-x-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            <svg lucideLogIn class="w-5 h-5 text-green-500"></svg>
-                            <span>Se connecter</span>
-                        </a>
-
-                        <a (click)="openRegisterModal()"
-                            class="flex items-center space-x-3 px-4 py-2.5 text-sm text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors">
-                            <svg lucideUserPlus class="w-5 h-5"></svg>
-                            <span>Créer un compte</span>
-                        </a>
-                        }
-
+                        class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                        {{ getUsernameInitial() }}
+                    </div>
+                    } @else {
+                    <div class="w-10 h-10 rounded-xl bg-[#EDC87F] text-[#834008] flex items-center justify-center">
+                        <svg lucideUser class="w-5 h-5"></svg>
                     </div>
                     }
+                </button>
+
+                @if (isDropdownOpen()) {
+                <div class="absolute right-0 mt-3 w-64 bg-white border-2 border-black rounded-2xl p-2 z-50">
+                    @if (authService.isLoggedIn()) {
+                    <div class="px-3 py-2 mb-2 bg-gray-100 rounded-xl">
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">{{authService.getUsername()}}</p>
+                    </div>
+                    <a routerLink="/favoris" (click)="isDropdownOpen.set(false)"
+                        class="flex items-center gap-3 px-3 py-3 font-bold text-black hover:bg-[#EDC87F] rounded-xl transition-colors">
+                        <svg lucideHeart class="w-5 h-5"></svg> Favoris
+                    </a>
+                    <a routerLink="/restaurants/new" (click)="isDropdownOpen.set(false)"
+                        class="flex items-center gap-3 px-3 py-3 font-bold text-black hover:bg-[#EDC87F] rounded-xl transition-colors">
+                        <svg lucideSquarePlus class="w-5 h-5"></svg> Nouveau restaurant
+                    </a>
+                    <button (click)="logout()"
+                        class="w-full mt-2 flex items-center gap-3 px-3 py-3 font-bold text-white bg-black hover:bg-gray-800 rounded-xl transition-colors">
+                        <svg lucideLogOut class="w-5 h-5"></svg> Déconnexion
+                    </button>
+                    } @else {
+                    <button (click)="openLoginModal()"
+                        class="w-full flex items-center gap-3 px-3 py-3 font-bold text-black bg-[#EDC87F] hover:bg-[#e0b96a] rounded-xl transition-colors">
+                        <svg lucideLogIn class="w-5 h-5"></svg> Se connecter
+                    </button>
+                    <button (click)="openRegisterModal()"
+                        class="w-full mt-2 flex items-center gap-3 px-3 py-3 font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors">
+                        <svg lucideUserPlus class="w-5 h-5"></svg> Créer un compte
+                    </button>
+                    }
                 </div>
+                }
             </div>
         </div>
     </div>

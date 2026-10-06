@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth-service';
-import { catchError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { AuthModalService } from '../services/auth-modal-service';
 
 export const interceptor: HttpInterceptorFn = (req, next) => {
@@ -22,7 +22,7 @@ export const interceptor: HttpInterceptorFn = (req, next) => {
         authService.logout();
         authModalService.openLogin();
       }
-      throw error;
+      return throwError(() => error);
     })
   );
 

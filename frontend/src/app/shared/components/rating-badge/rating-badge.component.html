@@ -1,0 +1,10 @@
+@if (rating() && rating()! > 0) {
+<div class="inline-flex items-center gap-1.5 bg-orange-500 text-white px-3 py-1 rounded-lg text-sm font-bold">
+    <span>{{ rating() | number:'1.1-1' }}</span>
+    <span>★</span>
+</div>
+} @else {
+<span class="inline-flex items-center bg-gray-200 text-gray-600 px-3 py-1 rounded-lg text-sm font-bold">
+    N/A
+</span>
+}

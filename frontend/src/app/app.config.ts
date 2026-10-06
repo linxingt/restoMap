@@ -3,7 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import localeFr from '@angular/common/locales/fr';
-import { provideLucideConfig, provideLucideIcons, LucideUser, LucideChevronDown, LucideChevronUp, LucideLogOut, LucideLogIn, LucideUserPlus, LucideHeart, LucideFileText } from '@lucide/angular';
+import { provideLucideConfig, provideLucideIcons, LucideUser, LucideLogOut, LucideLogIn, LucideUserPlus, LucideHeart, LucideFileText,LucideSquarePlus } from '@lucide/angular';
 
 import { routes } from './app.routes';
 import { interceptor } from './core/interceptors/interceptor';
@@ -17,13 +17,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([interceptor])),
     provideLucideIcons(
       LucideUser,
-      LucideChevronDown,
-      LucideChevronUp,
       LucideLogOut,
       LucideLogIn,
       LucideUserPlus,
       LucideHeart,
       LucideFileText,
+      LucideSquarePlus,
     ),
     provideLucideConfig({ size: 12 }),
   ]

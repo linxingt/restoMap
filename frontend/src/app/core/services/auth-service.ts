@@ -10,6 +10,8 @@ export class AuthService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/auth`;
 
+  isLoggedIn = signal<boolean>(this.checkInitialLoginState());
+
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
@@ -17,6 +19,7 @@ export class AuthService {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', response.username);
+          this.isLoggedIn.set(true);
         }
       })
     );
@@ -36,9 +39,11 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    this.isLoggedIn.set(false);
   }
 
-  isLoggedIn(): boolean {
+  private checkInitialLoginState(): boolean {
     const token = this.getToken();
     if (!token) return false;
 
@@ -48,9 +53,7 @@ export class AuthService {
       const payload = JSON.parse(atob(token.split('.')[1]));
       
       // 'exp' est en secondes, Date.now() est en millisecondes
-      const isExpired = payload.exp * 1000 < Date.now();
-      
-      return !isExpired; // Retourne true si le token n'est PAS expiré
+      return payload.exp * 1000 > Date.now();
     } catch (e) {
       return false;
     }

@@ -1,0 +1,92 @@
+<div class="mt-24 max-w-4xl mx-auto p-6 min-h-screen">
+    <div class="flex items-center justify-between mb-8">
+        <h1 class="text-4xl font-bold text-black tracking-tight">
+            {{ editing() ? 'Modifier' : 'Nouveau restaurant' }}
+        </h1>
+        <a routerLink="/" class="px-4 py-2 bg-gray-100 text-black font-bold rounded-xl hover:bg-gray-200">
+            Retour
+        </a>
+    </div>
+
+    @if(isLoading) {
+    <div class="text-center py-20 font-bold text-xl text-[#834008]">Chargement...</div>
+    } @else {
+    <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()" class="space-y-8">
+        <div formArrayName="restaurants" class="space-y-6">
+            @for (control of restaurantsFormArray.controls; track idx; let idx = $index) {
+            <div [formGroupName]="idx" class="relative p-8 bg-[#EDC87F]/20 rounded-3xl">
+
+                @if(!editing() && restaurantsFormArray.length > 1) {
+                <button type="button" (click)="removeRestaurantField(idx)"
+                    class="absolute top-6 right-6 text-[#834008] font-bold px-3 py-1 bg-white rounded-lg hover:bg-[#834008] hover:text-white transition-colors">
+                    Retirer
+                </button>
+                <h3 class="text-lg text-black font-bold mb-4">
+                    Restaurant #{{ idx + 1 }}
+                </h3>
+                }
+
+                <div class="grid grid-cols-1 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-[#834008] mb-2 uppercase tracking-wide">Nom *</label>
+                        <input type="text" formControlName="name"
+                            class="w-full px-4 py-3 bg-white rounded-xl border-2 border-transparent focus:border-black outline-none font-medium text-black"
+                            [class.border-red-500]="control.get('name')?.invalid && control.get('name')?.touched">
+
+                        @if (control.get('name')?.invalid && control.get('name')?.touched) {
+                        <p class="text-red-500 text-xs mt-1">
+                            Le nom est obligatoire (min. 2 caractères).
+                        </p>
+                        }
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-[#834008] mb-2 uppercase tracking-wide">Adresse
+                            *</label>
+                        <input type="text" formControlName="address"
+                            class="w-full px-4 py-3 bg-white rounded-xl border-2 border-transparent focus:border-black outline-none font-medium text-black"
+                            [class.border-red-500]="control.get('address')?.invalid && control.get('address')?.touched">
+
+                        @if (control.get('address')?.invalid && control.get('address')?.touched) {
+                        <p class="text-red-500 text-xs mt-1">
+                            L'adresse est obligatoire.
+                        </p>
+                        }
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-[#834008] mb-2 uppercase tracking-wide">Cuisines
+                            (séparées par virgules) *</label>
+                        <input type="text" formControlName="cuisineTypes" placeholder="Italien, Pizza..."
+                            class="w-full px-4 py-3 bg-white rounded-xl border-2 border-transparent focus:border-black outline-none font-medium text-black"
+                            [class.border-red-500]="control.get('cuisineTypes')?.invalid && control.get('cuisineTypes')?.touched">
+
+                        @if (control.get('cuisineTypes')?.invalid && control.get('cuisineTypes')?.touched) {
+                        <p class="text-red-500 text-xs mt-1">
+                            Veuillez ajouter au moins un type de cuisine.
+                        </p>
+                        }
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-between items-center pt-4">
+            @if(!editing()) {
+            <button type="button" (click)="addRestaurantField()"
+                class="px-6 py-3 bg-white border-2 border-black text-black font-bold rounded-2xl hover:bg-gray-50">
+                + Ajouter un autre
+            </button>
+            } @else {
+            <div></div>
+            }
+
+            <button type="submit" [disabled]="restaurantForm.invalid"
+                class="px-8 py-3 bg-blue-600 text-white rounded-2xl font-bold disabled:opacity-50 disabled:bg-gray-300 transition-colors">
+                {{ editing() ? 'Sauvegarder' : 'Enregistrer' }}
+            </button>
+        </div>
+    </form>
+    }
+</div>

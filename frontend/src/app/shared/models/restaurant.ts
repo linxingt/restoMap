@@ -1,17 +1,23 @@
 import { User } from "./user";
+import { Comment } from "./comment";
 
 export interface Restaurant {
-    _id?: number;
+    id?: string;
     name: string;
-    slug: string;
-    latitudeEtlongitude: [number, number];
-    cuisineTypes: string[];
+    slug?: string;
+    latitudeEtlongitude?: [number, number] | null;
     address: string;
-    link?: string;
+    photos?: string[];
+    cuisineTypes: string[];
     pricePerPersonAvg?: number;
     ratingAvg?: number;
     approved?: boolean;
-    photos?: string[];
-    visitors?: User[];
     updatedAt?: Date;
+    lastCommentAt?: Date;
+    visitorsCount?: number;
+    favoritesCount?: number;
+    isGoodRatio?: number;
+    isFavorite?: boolean;
+    isVisited?: boolean;
+    comments?: Comment[];
 }

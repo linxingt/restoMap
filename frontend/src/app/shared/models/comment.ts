@@ -1,8 +1,7 @@
 export interface Comment {
-  id?: number;
-  restaurant: string;
-  user: string;
-  rating: number; // 1 à 5
+  id?: string;
+  authorName: string;
+  rating: number; 
   isGood: boolean;
   content?: string;
   pricePerPerson?: number;

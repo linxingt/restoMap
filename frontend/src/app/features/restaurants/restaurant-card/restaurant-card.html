@@ -1,62 +1,52 @@
 @let resto = restaurant();
 
-<div class="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition cursor-pointer mb-5 p-4 flex flex-col" (click)="goToRestaurant()">
-  
+<div (mouseenter)="hover.emit(resto.id || null)" (mouseleave)="hover.emit(null)" (click)="goToRestaurant()"
+  class="bg-white rounded-2xl overflow-hidden border-2 border-black cursor-pointer mb-5 p-4 flex flex-col hover:bg-[#EDC87F]/10 transition-colors">
+
   <div class="flex justify-between items-start gap-4">
-    
     <div class="flex-1 flex flex-col">
-      
-      <h2 class="text-[17px] font-medium text-gray-900 leading-tight">
-        {{ resto.name }}
-      </h2>
-      
-      <div class="flex items-center text-sm text-gray-600 mt-1 gap-1">
-        <span class="font-medium text-gray-800">
-          {{ resto.ratingAvg ? resto.ratingAvg : '-' }}
-        </span>
-        <span class="text-yellow-500 text-base leading-none -mt-0.5">★</span>
-        <span class="ml-0.5">
-          ({{ resto.visitors?.length || 0 }})
-        </span>
-        <span class="mx-0.5" aria-hidden="true">·</span>
-        <span>
-          {{ resto.pricePerPersonAvg ? resto.pricePerPersonAvg + '€' : '?€' }}
+      <div class="flex items-center gap-2 mb-2">
+        <h2 class="text-lg font-bold text-black leading-tight">
+          {{ resto.name }}
+        </h2>
+        <app-rating-badge [rating]="resto.ratingAvg" />
+      </div>
+
+      <div class="flex items-center text-xs text-gray-600 font-semibold gap-1">
+        <svg lucideMapPinCheckInside class="w-4 h-4" />
+        <span> {{ resto.visitorsCount || 0 }}</span>
+        <span class="mx-1 text-black">•</span>
+        <svg lucideBanknoteCheck  class="w-4 h-4" />
+        <span class="font-bold text-black">
+          {{ resto.pricePerPersonAvg ? resto.pricePerPersonAvg + ' € / pers.' : 'Prix N/C' }}
         </span>
       </div>
-      
-      <div class="text-sm text-gray-500 mt-1">
+
+      <div class="text-xs text-gray-500 mt-2 font-medium">
         <span>{{ resto.address | postalCode }}</span>
-        <span class="mx-1" aria-hidden="true">·</span>
-        <span>{{ resto.updatedAt | date:'dd/MM/yyyy' }}</span>
+        <span class="mx-1">•</span>
+        <span>{{ resto.updatedAt | date:'d MMM y':'':'fr'}}</span>
       </div>
     </div>
 
     @if (resto.photos && resto.photos.length > 0) {
-      <div class="w-[84px] h-[84px] flex-shrink-0 rounded-md overflow-hidden bg-gray-100">
-        <img [src]="resto.photos[0]" alt="Photo de {{ resto.name }}" class="w-full h-full object-cover" />
-      </div>
+    <div class="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden border-2 border-black bg-gray-100">
+      <img [src]="resto.photos[0]" [alt]="resto.name" class="w-full h-full object-cover" />
+    </div>
     }
   </div>
 
   @if (resto.cuisineTypes && resto.cuisineTypes.length > 0) {
-    <div class="flex flex-wrap gap-1.5 mt-3">
-      @for (type of resto.cuisineTypes; track $index) {
-        <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-[13px]">
-          {{ type }}
-        </span>
-      }
-    </div>
+  <div class="flex flex-wrap gap-2 mt-4">
+    @for (type of resto.cuisineTypes; track $index) {
+    <app-cuisine-tag [label]="type" />
+    }
+  </div>
   }
 
-  <a [href]="'https://www.google.com/maps/search/?api=1&query=' + resto.name"
-     target="_blank"
-     (click)="$event.stopPropagation()"
-     class="mt-4 w-full flex justify-center items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium py-2 px-4 rounded-full text-sm transition-colors duration-200">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-    Voir sur Google Maps
+  <a [href]="googleSearchUrl()" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()"
+    class="mt-4 w-full flex justify-center items-center gap-2 bg-white border-2 border-black hover:bg-black hover:text-white text-black font-bold py-2 px-3 rounded-xl text-xs transition-colors">
+    Rechercher sur Google
   </a>
 
 </div>

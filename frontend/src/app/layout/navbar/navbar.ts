@@ -1,13 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { LucideUser, LucideChevronDown, LucideChevronUp, LucideLogOut, LucideLogIn, LucideUserPlus, LucideHeart, LucideFileText } from '@lucide/angular';
+import { LucideUser, LucideLogOut, LucideLogIn, LucideUserPlus, LucideHeart, LucideSquarePlus } from '@lucide/angular';
 import { AuthModalService } from '../../core/services/auth-modal-service';
 import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, RouterLinkActive, LucideUser, LucideChevronDown, LucideChevronUp, LucideLogOut, LucideLogIn, LucideUserPlus, LucideHeart, LucideFileText],
+  imports: [RouterLink, RouterLinkActive, LucideUser, LucideLogOut, LucideLogIn, LucideUserPlus, LucideHeart, LucideSquarePlus],
   templateUrl: './navbar.html',
 })
 export class Navbar {
