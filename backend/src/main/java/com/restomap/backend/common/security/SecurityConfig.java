@@ -1,5 +1,6 @@
 package com.restomap.backend.common.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,9 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
+    @Value("${cors.allowed-origins}")
+    private String allowedOrigins;
+
     private final AuthenticationFilter authFilter;
 
     public SecurityConfig(AuthenticationFilter authFilter) {
@@ -43,7 +47,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

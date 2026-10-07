@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class RestaurantMapComponent implements AfterViewInit {
   restaurants = input.required<Restaurant[]>();
   targetId = input<string | null>(null);
-
   autoFlyTo = input<boolean>(false);
 
   private map!: L.Map;
@@ -73,10 +72,10 @@ export class RestaurantMapComponent implements AfterViewInit {
 
     currentList.forEach(resto => {
       const coords = resto.latitudeEtlongitude;
-      const lat = coords?.[0];
-      const lng = coords?.[1];
+      const lat = coords?.[0] != null ? Number(coords[0]) : NaN;
+      const lng = coords?.[1] != null ? Number(coords[1]) : NaN;
 
-      if (!resto.id || lat == null || lng == null || isNaN(lat) || isNaN(lng)) return;
+     if (!resto.id || isNaN(lat) || isNaN(lng)) return;
       const rating = resto.ratingAvg || 0;
       let iconUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png';
 
@@ -124,15 +123,18 @@ export class RestaurantMapComponent implements AfterViewInit {
       this.markerMap.set(resto.id, marker);
     });
 
+    this.map.invalidateSize();
+
     if (this.autoFlyTo()) {
       const firstValidResto = currentList.find((resto) => {
-        const lat = resto.latitudeEtlongitude?.[0];
-        const lng = resto.latitudeEtlongitude?.[1];
-        return lat != null && lng != null && !isNaN(lat) && !isNaN(lng);
+        const lat = resto.latitudeEtlongitude?.[0] != null ? Number(resto.latitudeEtlongitude[0]) : NaN;
+        const lng = resto.latitudeEtlongitude?.[1] != null ? Number(resto.latitudeEtlongitude[1]) : NaN;
+        return !isNaN(lat) && !isNaN(lng);
       });
 
       if (firstValidResto && firstValidResto.latitudeEtlongitude) {
-        const [targetLat, targetLng] = firstValidResto.latitudeEtlongitude;
+        const targetLat = Number(firstValidResto.latitudeEtlongitude[0]);
+        const targetLng = Number(firstValidResto.latitudeEtlongitude[1]);
         this.map.flyTo([targetLat, targetLng], 17, {
           animate: true,
           duration: 1.2
