@@ -26,4 +26,20 @@ public class GlobalExceptionHandler {
         problem.setTitle("Business Logic Conflict");
         return problem;
     }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail handleBadCredentials(BadCredentialsException ex) {
+        log.warn("Échec d'authentification ou de vérification : {}", ex.getMessage());
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED,ex.getMessage());
+        problem.setTitle("Authentication Failure");
+        return problem;
+    }
+
+    @ExceptionHandler(AccountBlockedException.class)
+    public ProblemDetail handleAccountBlocked(AccountBlockedException ex) {
+        log.warn("Tentative d'accès sur un compte bloqué : {}", ex.getMessage());
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN,ex.getMessage());
+        problem.setTitle("Account Blocked");
+        return problem;
+    }
 }

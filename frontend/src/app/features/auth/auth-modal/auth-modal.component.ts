@@ -1,12 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthModalService } from '../../../core/services/auth-modal-service';
 import { AuthService } from '../../../core/services/auth-service';
+import { environment } from '../../../../environments/environment';
+import { VerificationModalComponent } from '../verification-modal/verification-modal.component';
 
 @Component({
   selector: 'app-auth-modal',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, VerificationModalComponent],
   templateUrl: './auth-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthModalComponent {
   authModal = inject(AuthModalService);
@@ -44,11 +47,17 @@ export class AuthModalComponent {
 
       if (this.authModal.isLoginMode()) {
         this.authService.login(formData).subscribe({
-          next: () => {
-            alert('Connexion réussie !');
-            this.authModal.close();
+          next: (response) => {
+            if (response && response.message === 'CODE_REQUIRED') {
+              this.authModal.openVerification(formData.email!);
+            } else {
+              alert('Connexion réussie !');
+              this.authModal.close();
+            }
           },
-          error: (err) => alert("Erreur de connexion : " + err.error)
+          error: (err) => alert("Erreur de connexion : " + (typeof err.error === 'string' 
+              ? err.error 
+              : (err.error?.detail || err.error?.message || err.error?.error || "Une erreur est survenue lors de l'envoi de l'e-mail.")))
         });
       } else {
         this.authService.register(formData).subscribe({
@@ -57,9 +66,20 @@ export class AuthModalComponent {
             this.authModal.isLoginMode.set(true);
             this.updateUsernameValidation();
           },
-          error: (err) => alert("Erreur d'inscription : " + err.error)
+          error: (err) => alert("Erreur d'inscription : " + (typeof err.error === 'string' 
+              ? err.error 
+             : (err.error?.detail || err.error?.message || err.error?.error|| "Une erreur est survenue lors de l'inscription.")))
         });
       }
     }
+  }
+
+  onVerificationSuccess() {
+    this.authModal.close();
+    alert('Connexion réussie !')
+  }
+
+  loginWithGoogle() {
+    window.location.href = `${environment.apiUrl.replace('/api', '')}/oauth2/authorization/google`;
   }
 }

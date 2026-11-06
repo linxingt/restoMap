@@ -27,4 +27,9 @@ public class AuthController {
     public ResponseEntity<UserDTO.AuthResponse> login(@Valid @RequestBody UserDTO.LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
+
+    @PostMapping("/verify-code")
+    public ResponseEntity<UserDTO.AuthResponse> verifyCode(@Valid @RequestBody UserDTO.VerifyCodeRequest request) {
+        return ResponseEntity.ok(authService.verifyCode(request));
+    }
 }

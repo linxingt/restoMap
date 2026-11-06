@@ -13,8 +13,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String username;
-
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -23,8 +21,14 @@ public class User {
 
     // 'USER' | 'ADMIN' | 'VISITOR'
     private String role;
-
+    private String username;
     private Date createdAt;
+    private String verificationCode;
+    private Date lastVerifiedAt;
+    private Date lockoutUntil;
+
+    @Column(nullable = false)
+    private int verificationFailedAttempts = 0;
 
     @ManyToMany
     @JoinTable(
@@ -76,4 +80,12 @@ public class User {
     public void setFavorites(Set<Restaurant> favorites) { this.favorites = favorites; }
     public Set<Restaurant> getVisitedRestaurants() { return visitedRestaurants; }
     public void setVisitedRestaurants(Set<Restaurant> visitedRestaurants) { this.visitedRestaurants = visitedRestaurants; }
+    public String getVerificationCode() { return verificationCode; }
+    public void setVerificationCode(String verificationCode) { this.verificationCode = verificationCode; }
+    public Date getLastVerifiedAt() { return lastVerifiedAt; }
+    public void setLastVerifiedAt(Date lastVerifiedAt) { this.lastVerifiedAt = lastVerifiedAt; }
+    public int getVerificationFailedAttempts() { return verificationFailedAttempts; }
+    public void setVerificationFailedAttempts(int verificationFailedAttempts) { this.verificationFailedAttempts = verificationFailedAttempts; }
+    public Date getLockoutUntil() { return lockoutUntil; }
+    public void setLockoutUntil(Date lockoutUntil) { this.lockoutUntil = lockoutUntil; }
 }

@@ -15,11 +15,8 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        //intercepte la réponse pour sauvegarde ce token puis laisse la réponse continuer
         if (response && response.token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('username', response.username);
-          this.isLoggedIn.set(true);
+          this.saveSession(response.token, response.username);
         }
       })
     );
@@ -27,6 +24,26 @@ export class AuthService {
 
   register(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, userData);
+  }
+
+  verifyCode(data: { email: string; code: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/verify-code`, data).pipe(
+      tap(response => {
+        if (response && response.token) {
+          this.saveSession(response.token, response.username);
+        }
+      })
+    );
+  }
+
+  initiateGoogleLogin(): void {
+    window.location.href = `${environment.apiUrl.replace('/api', '')}/oauth2/authorization/google`;
+  }
+
+  saveSession(token: string, username: string): void {
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
+    this.isLoggedIn.set(true);
   }
 
   getToken(): string | null {
@@ -51,7 +68,7 @@ export class AuthService {
       // Un JWT est composé de 3 parties séparées par des points. 
       // La partie [1] contient les données (le payload).
       const payload = JSON.parse(atob(token.split('.')[1]));
-      
+
       // 'exp' est en secondes, Date.now() est en millisecondes
       return payload.exp * 1000 > Date.now();
     } catch (e) {

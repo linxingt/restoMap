@@ -4,6 +4,7 @@ import { Navbar } from './layout/navbar/navbar';
 import { AuthModalComponent } from './features/auth/auth-modal/auth-modal.component';
 import { AuthModalService } from './core/services/auth-modal-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from './core/services/auth-service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Navbar, AuthModalComponent],
@@ -12,12 +13,26 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class App {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private authService = inject(AuthService);
   authModal = inject(AuthModalService);
 
   inviteCode: string | null = null;
 
   constructor() {
     this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe(params => {
+      const token = params.get('token');
+      const username = params.get('username');
+      if (token && username) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('username', username);
+        this.authService.isLoggedIn.set(true);
+
+        this.router.navigate([], {
+          queryParams: { token: null, username: null },
+          queryParamsHandling: 'merge'
+        });
+      }
+
       if (params.get('action') === 'register') {
         this.authModal.isLoginMode.set(false);
         this.authModal.openLogin();

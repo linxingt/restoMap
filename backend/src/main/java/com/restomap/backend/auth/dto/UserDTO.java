@@ -25,6 +25,17 @@ public class UserDTO {
             @NotBlank(message = "Le mot de passe est obligatoire")
             String password
     ) {}
+
+    public record VerifyCodeRequest(
+            @NotBlank(message = "L'email est obligatoire")
+            @Email(message = "Format d'email invalide")
+            String email,
+
+            @NotBlank(message = "Le code est obligatoire")
+            @Size(min = 6, max = 6, message = "Le code doit comporter exactement 6 caractères")
+            String code
+    ) {}
+
     public record AuthResponse(String token, String username, String message) {}
     public record UserResponse(String id, String username, String role) {}
 }

@@ -1,0 +1,34 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all p-4">
+    <div class="relative w-full max-w-md p-8 bg-white border-2 border-black rounded-3xl">
+
+        <button type="button" (click)="onCancel()"
+            class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border-2 border-black rounded-full bg-gray-100 hover:bg-[#EDC87F] font-bold transition-colors">✕</button>
+
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-black">Vérification de sécurité</h2>
+            <p class="text-sm font-bold text-gray-500 mt-2">
+                Un code à 6 caractères a été envoyé à votre adresse e-mail. Il est requis pour votre session de la journée.
+            </p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" class="space-y-5">
+            <div>
+                <label class="block text-sm font-bold text-black mb-2">Code de vérification</label>
+                <input type="text" [(ngModel)]="code" name="code" maxlength="6" placeholder="Ex: Ab39Xz" required
+                    class="w-full px-4 py-3 border-2 border-black rounded-xl outline-none focus:bg-[#EDC87F]/10 transition-colors text-center tracking-widest text-lg font-bold">
+            </div>
+
+            @if(errorMessage) {
+            <div class="text-red-600 text-xs font-bold bg-red-50 p-2 rounded-xl border border-red-200 text-center">
+                {{ errorMessage }}
+            </div>
+            }
+
+            <button type="submit"
+                class="w-full py-3 px-4 text-white bg-black border-2 border-black rounded-xl font-bold hover:bg-gray-800 transition-colors mt-2">
+                Valider le code
+            </button>
+        </form>
+
+    </div>
+</div>
