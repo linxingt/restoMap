@@ -10,6 +10,7 @@ import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, String>{
     Optional<User> findByEmail(String email);
+    Optional<User> findByResetToken(String resetToken);
     boolean existsByEmail(String email);
 
     @Query("SELECT r.id FROM User u JOIN u.favorites r WHERE u.email = :email")

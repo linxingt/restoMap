@@ -162,4 +162,44 @@ public class AuthService {
             return false;
         }
     }
+
+    @Transactional
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur introuvable avec cet email"));
+
+        String token = generateRandomCode() + generateRandomCode();
+        user.setResetToken(token);
+        userRepository.save(user);
+
+        try {
+            emailService.sendPasswordResetEmail(user.getEmail(), token);
+            log.info("E-mail de réinitialisation de mot de passe envoyé à : {}", user.getEmail());
+        } catch (Exception e) {
+            throw new RuntimeException("Échec de l'envoi de l'e-mail de réinitialisation : " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void resetPassword(UserDTO.ResetPasswordRequest request) {
+        if (!request.password().equals(request.confirmPassword())) {
+            throw new BusinessException("Les mots de passe ne correspondent pas");
+        }
+
+        User user = userRepository.findByResetToken(request.token())
+                .orElseThrow(() -> new BusinessException("Token de réinitialisation invalide ou expiré"));
+
+        user.setPassword(passwordEncoder.encode(request.password()));
+        user.setResetToken(null);
+        user.setVerificationFailedAttempts(0);
+        user.setLockoutUntil(null);
+        userRepository.save(user);
+
+        try {
+            emailService.sendPasswordChangedEmail(user.getEmail());
+            log.info("Mot de passe modifié avec succès pour : {}", user.getEmail());
+        } catch (Exception e) {
+            log.warn("Erreur lors de l'envoi de l'e-mail de confirmation : {}", e.getMessage());
+        }
+    }
 }

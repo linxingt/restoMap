@@ -26,6 +26,7 @@ public class User {
     private String verificationCode;
     private Date lastVerifiedAt;
     private Date lockoutUntil;
+    private String resetToken;
 
     @Column(nullable = false)
     private int verificationFailedAttempts = 0;
@@ -88,4 +89,6 @@ public class User {
     public void setVerificationFailedAttempts(int verificationFailedAttempts) { this.verificationFailedAttempts = verificationFailedAttempts; }
     public Date getLockoutUntil() { return lockoutUntil; }
     public void setLockoutUntil(Date lockoutUntil) { this.lockoutUntil = lockoutUntil; }
+    public String getResetToken() { return resetToken; }
+    public void setResetToken(String resetToken) { this.resetToken = resetToken; }
 }

@@ -60,6 +60,14 @@ export class AuthService {
     this.isLoggedIn.set(false);
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(data: { token: string; password: string; confirmPassword: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password`, data);
+  }
+
   private checkInitialLoginState(): boolean {
     const token = this.getToken();
     if (!token) return false;

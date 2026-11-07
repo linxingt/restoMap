@@ -28,6 +28,19 @@ export const routes: Routes = [
             import('./features/restaurants/restaurant-form/restaurant-form.component')
                 .then(m => m.RestaurantFormComponent)
     },
+
+    {
+        path: 'privacy-policy',
+        loadComponent: () =>
+            import('./features/legal/privacy-policy/privacy-policy.component')
+                .then(m => m.PrivacyPolicyComponent)
+    },
+    {
+        path: 'terms-of-use',
+        loadComponent: () =>
+            import('./features/legal/terms-of-use/terms-of-use.component')
+                .then(m => m.TermsOfUseComponent)
+    },
     {
         path: '**',
         redirectTo: ''
