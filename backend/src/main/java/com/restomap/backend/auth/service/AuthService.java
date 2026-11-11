@@ -45,6 +45,10 @@ public class AuthService {
 
         User user = new User();
         user.setUsername(request.username());
+        if (!isValidEmailDomain(request.email())) {
+            log.warn("Tentative d'utilisation d'un domaine d'e-mail invalide : {}", request.email());
+            throw new BusinessException("Le domaine de l'e-mail est introuvable ou invalide.");
+        }
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setRole("USER");
@@ -74,10 +78,6 @@ public class AuthService {
         }
 
         if (needsVerification) {
-            if (!isValidEmailDomain(user.getEmail())) {
-                log.warn("Tentative d'utilisation d'un domaine d'e-mail invalide : {}", user.getEmail());
-                throw new BusinessException("Le domaine de l'e-mail est introuvable ou invalide.");
-            }
             String code = generateRandomCode();
             user.setVerificationCode(code);
             userRepository.save(user);

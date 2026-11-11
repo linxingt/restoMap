@@ -55,7 +55,7 @@ export class AuthModalComponent {
 
     this.authService.forgotPassword(email).subscribe({
       next: () => {
-        alert("Un e-mail de réinitialisation a été envoyé à " + email + ". Veuillez vérifier votre boîte de réception.");
+        alert("Un e-mail de réinitialisation va être envoyé à " + email + ". Veuillez vérifier votre boîte de réception.");
       },
       error: (err) => alert("Erreur : " + (err.error?.detail || err.error?.message || "Impossible d'envoyer l'e-mail de réinitialisation."))
     });
@@ -98,8 +98,8 @@ export class AuthModalComponent {
               this.authModal.close();
             }
           },
-          error: (err) => alert("Erreur de connexion : " + (typeof err.error === 'string' 
-              ? err.error 
+          error: (err) => alert("Erreur de connexion : " + (typeof err.error === 'string'
+              ? err.error
               : (err.error?.detail || err.error?.message || err.error?.error || "Une erreur est survenue lors de l'envoi de l'e-mail.")))
         });
       } else {
@@ -109,8 +109,8 @@ export class AuthModalComponent {
             this.authModal.isLoginMode.set(true);
             this.updateUsernameValidation();
           },
-          error: (err) => alert("Erreur d'inscription : " + (typeof err.error === 'string' 
-              ? err.error 
+          error: (err) => alert("Erreur d'inscription : " + (typeof err.error === 'string'
+              ? err.error
              : (err.error?.detail || err.error?.message || err.error?.error|| "Une erreur est survenue lors de l'inscription.")))
         });
       }
